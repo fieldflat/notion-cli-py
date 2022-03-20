@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "notion-cli-py"
+version = "0.1.0"
+description = ""
+authors = ["Tomonori HIRATA <hirata@sqlab.jp>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+fire = "^0.4.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+notion-cli = "notion_cli_py.cli:main"

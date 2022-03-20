@@ -1,0 +1,12 @@
+{
+    "filter": {
+        "or": [
+            {
+                "property": "Name",
+                "title": {
+                    "equals": "aaa"
+                }
+            }
+        ]
+    }
+}

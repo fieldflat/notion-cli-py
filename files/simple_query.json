@@ -1,0 +1,18 @@
+{
+    "filter": {
+        "or": [
+            {
+                "property": "Name",
+                "title": {
+                    "equals": "aaa"
+                }
+            }
+        ]
+    },
+    "sorts": [
+        {
+            "property": "Name",
+            "direction": "ascending"
+        }
+    ]
+}

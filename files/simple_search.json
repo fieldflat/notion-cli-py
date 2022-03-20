@@ -1,0 +1,7 @@
+{
+    "query": "Simple Page (created by NotionCLI)",
+    "sort": {
+        "direction": "ascending",
+        "timestamp": "last_edited_time"
+    }
+}

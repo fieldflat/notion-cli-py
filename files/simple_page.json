@@ -1,0 +1,13 @@
+{
+    "properties": {
+        "title": {
+            "title": [
+                {
+                    "text": {
+                        "content": "Simple Page (created by NotionCLI)"
+                    }
+                }
+            ]
+        }
+    }
+}
