@@ -25,9 +25,11 @@ class Client:
 
         return response.text
 
-    def get_page_property(self, page_id, property_id):
+    def get_page_property(self, page_id, property_id, page_size, start_cursor):
         """ get page property """
-        url = "https://api.notion.com/v1/pages/{page_id}/properties/{property_id}".format(page_id=page_id, property_id=property_id)
+        url = "https://api.notion.com/v1/pages/{page_id}/properties/{property_id}?page_size={page_size}".format(page_id=page_id, property_id=property_id, page_size=page_size)
+        if start_cursor:
+            url += "&start_cursor={start_cursor}".format(start_cursor=start_cursor)
         headers = self.get_headers()
         response = requests.request("GET", url, headers=headers)
 
@@ -82,8 +84,10 @@ class Client:
 
         return response.text
 
-    def get_block_children(self, block_id, page_size):
+    def get_block_children(self, block_id, page_size, start_cursor):
         url = "https://api.notion.com/v1/blocks/{block_id}/children?page_size={page_size}".format(block_id=block_id, page_size=page_size)
+        if start_cursor:
+            url += "&start_cursor={start_cursor}".format(start_cursor=start_cursor)
         headers = self.get_headers()
         response = requests.request("GET", url, headers=headers)
 
@@ -117,8 +121,10 @@ class Client:
 
         return response.text
 
-    def get_all_user(self, page_size):
+    def get_all_user(self, page_size, start_cursor):
         url = "https://api.notion.com/v1/users?page_size={page_size}".format(page_size=page_size)
+        if start_cursor:
+            url += "&start_cursor={start_cursor}".format(start_cursor=start_cursor)
         headers = self.get_headers()
         response = requests.request("GET", url, headers=headers)
 
