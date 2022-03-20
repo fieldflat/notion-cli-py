@@ -3,7 +3,7 @@ from typing import Dict
 from ..client import client
 import sys
 import re
-from ..utils import read_file
+from ..utils import read_file, confirm
 from tabulate import tabulate
 
 class CreateClass:
@@ -11,7 +11,9 @@ class CreateClass:
         """ CreateClass __init__ """
 
     def pages(self, page_ids="", database_ids="", template_name="simple_page", read_path=None, noconfirm=False, label="current"):
-        """ create pages """
+        """
+        create pages
+        """
         c = client.Client(label)
 
         ### load template
@@ -21,38 +23,25 @@ class CreateClass:
 
         ret = []
         for page_id in page_ids.split():
-            while True and (not noconfirm):
-                contents = [("page_id", page_id), ("template path", read_path)]
-                print(tabulate(contents, headers=["key", "value"], tablefmt='fancy_grid'))
-                choice = input("is OK? [y/N]: ").lower()
-                if choice in ['y', 'ye', 'yes']:
-                    payload["parent"] = {
-                        "page_id": page_id,
-                    }
-                    ret.append(json.loads(c.create_page(payload)))
-                    break
-                elif choice in ['n', 'no']:
-                    print("==> Skipped.")
-                    break
+            contents = [("page_id", page_id), ("template path", read_path)]
+            if confirm.confirm(contents, noconfirm=noconfirm):
+                payload["parent"] = {
+                    "page_id": page_id,
+                }
+                ret.append(json.loads(c.create_page(payload)))
         for database_id in database_ids.split():
-            # confirm settings
-            while True and (not noconfirm):
-                contents = [("database_id", database_id), ("template path", read_path)]
-                print(tabulate(contents, headers=["key", "value"], tablefmt='fancy_grid'))
-                choice = input("is OK? [y/N]: ").lower()
-                if choice in ['y', 'ye', 'yes']:
-                    payload["parent"] = {
-                        "database_id": database_id,
-                    }
-                    ret.append(json.loads(c.create_page(payload)))
-                    break
-                elif choice in ['n', 'no']:
-                    print("==> Skipped.")
-                    break
+            contents = [("database_id", database_id), ("template path", read_path)]
+            if confirm.confirm(contents, noconfirm=noconfirm):
+                payload["parent"] = {
+                    "database_id": database_id,
+                }
+                ret.append(json.loads(c.create_page(payload)))
         return json.dumps(ret) if len(ret) != 0 else sys.exit(0)
 
-    def databases(self, page_ids="", template_name="simple_database", read_path=None, noconfirm=False, label="current"):
-        """ create a single database """
+    def databases(self, page_ids, template_name="simple_database", read_path=None, noconfirm=False, label="current"):
+        """
+        create a single database
+        """
         c = client.Client(label)
 
         ### load template
@@ -62,18 +51,12 @@ class CreateClass:
 
         ret = []
         for page_id in page_ids.split():
-            while True and (not noconfirm):
-                contents = [("page_id", page_id), ("template name", read_path)]
-                print(tabulate(contents, headers=["key", "value"], tablefmt='fancy_grid'))
-                choice = input("is OK? [y/N]: ").lower()
-                if choice in ['y', 'ye', 'yes']:
-                    payload["parent"] = {
-                        "page_id": page_id,
-                    }
-                    ret.append(json.loads(c.create_database(payload)))
-                    break
-                elif choice in ['n', 'no']:
-                    print("==> Skipped.")
-                    break
+            contents = [("page_id", page_id), ("template name", read_path)]
+            if confirm.confirm(contents, noconfirm=noconfirm):
+                payload["parent"] = {
+                    "type": "page_id",
+                    "page_id": page_id,
+                }
+                ret.append(json.loads(c.create_database(payload)))
 
         return json.dumps(ret) if len(ret) != 0 else sys.exit(0)
