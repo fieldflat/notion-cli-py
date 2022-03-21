@@ -1,8 +1,6 @@
 import json
 from ..client import client
-from ..utils import read_file
-from tabulate import tabulate
-import sys
+from ..utils import read_file, confirm
 
 class AppendClass:
     def __init__(self):
@@ -18,17 +16,8 @@ class AppendClass:
 
         ret = []
         for block_id in block_ids.split():
-            while True and (not noconfirm):
-                contents = [("block_id", block_id), ("template path", read_path)]
-                print(tabulate(contents, headers=["key", "value"], tablefmt='fancy_grid'))
-                choice = input("is OK? [y/N]: ").lower()
-                if choice in ['y', 'ye', 'yes']:
-                    ret.append(json.loads(c.append_block_children(block_id, payload)))
-                    break
-                elif choice in ['n', 'no']:
-                    print("==> Skipped.")
-                    break
-            if noconfirm:
+            contents = [("block_id", block_id), ("template path", read_path)]
+            if confirm.confirm(contents, noconfirm=noconfirm):
                 ret.append(json.loads(c.append_block_children(block_id, payload)))
 
         return json.dumps(ret) if len(ret) != 0 else sys.exit(0)

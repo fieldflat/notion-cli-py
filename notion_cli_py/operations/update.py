@@ -46,7 +46,7 @@ class UpdateClass:
 
         return json.dumps(ret) if len(ret) != 0 else sys.exit(0)
 
-    def blocks(self, block_ids, template_name="simple_block", read_path=None, noconfirm=False, label="current"):
+    def blocks(self, block_ids, template_name="simple_update_block", read_path=None, noconfirm=False, label="current"):
         """
         update blocks
         """
