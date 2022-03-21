@@ -2,7 +2,7 @@
 name = "notion-cli-py"
 version = "0.1.0"
 description = ""
-authors = ["Tomonori HIRATA <hirata@sqlab.jp>"]
+authors = ["Tomonori HIRATA <tomonori4565@icloud.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.9"

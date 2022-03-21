@@ -10,23 +10,33 @@ class ConfigureClass:
         """ Configure __init__ """
         DIR = os.environ['HOME'] + "/.notion_cli"
         PATH = os.environ['HOME'] + "/.notion_cli/config.toml"
-        if not os.path.exists(DIR):
+        if not os.path.exists(DIR) or not os.path.exists(PATH):
+            print(
+                """
+_____   __     __________             ______________________
+___  | / /_______  /___(_)______________  ____/__  /____  _/
+__   |/ /_  __ \  __/_  /_  __ \_  __ \  /    __  /  __  /  
+_  /|  / / /_/ / /_ _  / / /_/ /  / / / /___  _  /____/ /   
+/_/ |_/  \____/\__/ /_/  \____//_/ /_/\____/  /_____/___/   
+                                                            
+                """
+            )
             yn = input("Are you sure to create config file in {DIR}? [y/N]: ".format(DIR=DIR))
             if yn != "y":
-                print("==> Done.")
+                print("==> Aborted.")
                 sys.exit(0)
-
-            print("'{DIR}' directory does not exist.".format(DIR=DIR))
-            print("creating directory '{DIR}' ... ".format(DIR=DIR))
-            os.mkdir(DIR)
-            print("==> Done.")
-            print("creating file '{PATH}' ... ".format(PATH=PATH))
-            try:
-                with open(PATH, "x") as f:
-                    print("==> Done.")
-            except FileExistsError:
-                print("'{PATH}' already exists.".format(PATH=PATH), file=sys.stderr)
-                sys.exit(1)
+            if not os.path.exists(DIR):
+                print("creating directory '{DIR}' ... ".format(DIR=DIR))
+                os.mkdir(DIR)
+                print("==> Done.")
+            if not os.path.exists(PATH):
+                print("creating file '{PATH}' ... ".format(PATH=PATH))
+                try:
+                    with open(PATH, "x") as f:
+                        print("==> Done.")
+                except FileExistsError:
+                    print("'{PATH}' already exists.".format(PATH=PATH), file=sys.stderr)
+                    sys.exit(1)
         config = toml.load(open(PATH))
         self.config = config
 
