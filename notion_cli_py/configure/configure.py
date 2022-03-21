@@ -3,11 +3,30 @@ import toml
 import os
 import sys
 from tabulate import tabulate
+from ..utils import confirm
 
 class ConfigureClass:
     def __init__(self):
         """ Configure __init__ """
+        DIR = os.environ['HOME'] + "/.notion_cli"
         PATH = os.environ['HOME'] + "/.notion_cli/config.toml"
+        if not os.path.exists(DIR):
+            yn = input("Are you sure to create config file in {DIR}? [y/N]: ".format(DIR=DIR))
+            if yn != "y":
+                print("==> Done.")
+                sys.exit(0)
+
+            print("'{DIR}' directory does not exist.".format(DIR=DIR))
+            print("creating directory '{DIR}' ... ".format(DIR=DIR))
+            os.mkdir(DIR)
+            print("==> Done.")
+            print("creating file '{PATH}' ... ".format(PATH=PATH))
+            try:
+                with open(PATH, "x") as f:
+                    print("==> Done.")
+            except FileExistsError:
+                print("'{PATH}' already exists.".format(PATH=PATH), file=sys.stderr)
+                sys.exit(1)
         config = toml.load(open(PATH))
         self.config = config
 
@@ -17,7 +36,7 @@ class ConfigureClass:
         if token is None:
             token = getpass('input token for {token}: '.format(token=token))
         if notion_api_version is None:
-            notion_api_version = input("input notion api version: ")
+            notion_api_version = input("input notion api version [2022-02-22]: ")
 
         conf = {
             "label": label,
@@ -26,14 +45,9 @@ class ConfigureClass:
         }
 
         # confirm settings
-        while True and (not noconfirm):
-            print(tabulate([(k, v if k != "token" else "*"*len(v[:-5]) + v[-5:]) for k, v in conf.items()], headers=["key", "value"], tablefmt='fancy_grid'))
-            choice = input("is OK? [y/N]: ").lower()
-            if choice in ['y', 'ye', 'yes']:
-                break
-            elif choice in ['n', 'no']:
-                print("==> Aborted.")
-                sys.exit(0)
+        contents = [(k, v if k != "token" else "*"*len(v[:-5]) + v[-5:]) for k, v in conf.items()]
+        if not confirm.confirm(contents, noconfirm=noconfirm):
+            sys.exit(0)
 
         # confirm override
         if label in self.config:
@@ -70,7 +84,7 @@ class ConfigureClass:
         config = toml.load(open(PATH))
         if label in config:
             print(tabulate([(k, v if k != "token" else "*"*len(v[:-5]) + v[-5:]) for k, v in config[label].items()], headers=["key", "value"], tablefmt='fancy_grid'))
-            print("Label: ", label)
+            print("is current label:", True if config["current"]["label"] == config[label]["label"] else False)
         else:
             print("Label: '{label}' does not exist in {path}".format(label=label, path=PATH))
             sys.exit(1)
