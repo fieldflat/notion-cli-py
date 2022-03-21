@@ -6,7 +6,20 @@ class QueryClass:
         """ QueryClass __init__ """
 
     def databases(self, database_ids, read_path, page_size=100, start_cursor="", write_path=None, indent=None, label="current"):
-        """ query databases """
+        """ Querying the database.
+
+        Args:
+            database_ids (_type_): Parent database ids (e.g. '--database-ids="xxxxxxxxxx yyyyyyyyyy"').
+            read_path (_type_): Read path for query file
+            page_size (int, optional): The number of items to be obtained. Defaults to 100.
+            start_cursor (str, optional): Starting position of the items to be acquired. Defaults to "".
+            write_path (_type_, optional): Write path for output file. Defaults to None.
+            indent (_type_, optional): Indent width of json. Defaults to None.
+            label (str, optional): Name to identify your integration. Defaults to "current".
+
+        Returns:
+            json: Result of querying the database.
+        """
         c = client.Client(label)
 
         ### load template

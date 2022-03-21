@@ -11,8 +11,18 @@ class CreateClass:
         """ CreateClass __init__ """
 
     def pages(self, page_ids="", database_ids="", template_name="simple_page", read_path=None, noconfirm=False, label="current"):
-        """
-        create pages
+        """ Create pages to existing parent page.
+
+        Args:
+            page_ids (str, optional): Parent page ids (e.g. '--page-ids="xxxxxxxxxx yyyyyyyyyy"'). Defaults to "".
+            database_ids (str, optional): Parent database ids (e.g. '--database-ids="xxxxxxxxxx yyyyyyyyyy"'). Defaults to "".
+            template_name (str, optional): Template name for page object. Defaults to "simple_page".
+            read_path (_type_, optional): Read path for input template file. Defaults to None.
+            noconfirm (bool, optional): If you need not to confirm, set '--noconfirm=True' option. Defaults to False.
+            label (str, optional): Name to identify your integration. Defaults to "current".
+
+        Returns:
+            json: Results of creating pages.
         """
         c = client.Client(label)
 
@@ -39,8 +49,17 @@ class CreateClass:
         return json.dumps(ret) if len(ret) != 0 else sys.exit(0)
 
     def databases(self, page_ids, template_name="simple_database", read_path=None, noconfirm=False, label="current"):
-        """
-        create a single database
+        """ Create databases to existing parent page.
+
+        Args:
+            page_ids (_type_): Parent page ids (e.g. '--page-ids="xxxxxxxxxx yyyyyyyyyy"')
+            template_name (str, optional): Template name for page object. Defaults to "simple_database".
+            read_path (_type_, optional): Read path for input template file. Defaults to None.
+            noconfirm (bool, optional): If you need not to confirm, set '--noconfirm=True' option. Defaults to False.
+            label (str, optional): Name to identify your integration. Defaults to "current".
+
+        Returns:
+            json: Results of creating databases.
         """
         c = client.Client(label)
 

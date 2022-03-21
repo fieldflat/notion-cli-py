@@ -7,7 +7,16 @@ class DeleteClass:
         """ DeleteClass __init__ """
 
     def blocks(self, block_ids, noconfirm=False, label="current"):
-        """ delete blocks """
+        """ Delete block objects.
+
+        Args:
+            block_ids (_type_): Parent block ids (e.g. '--block-ids="xxxxxxxxxx yyyyyyyyyy"')
+            noconfirm (bool, optional): If you need not to confirm, set '--noconfirm=True' option. Defaults to False.
+            label (str, optional): Name to identify your integration. Defaults to "current".
+
+        Returns:
+            json: Results of deleting block objects.
+        """
         c = client.Client(label)
 
         ret = []

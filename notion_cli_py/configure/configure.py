@@ -31,6 +31,15 @@ class ConfigureClass:
         self.config = config
 
     def set(self, label=None, token=None, notion_api_version=None, noconfirm=False):
+        """ Set your integration information.
+        You need to create Internal Integration Token before executing this command.
+
+        Args:
+            label (_type_, optional): Name to identify your integration. Defaults to None.
+            token (_type_, optional): Internal Integration Token. Defaults to None.
+            notion_api_version (_type_, optional): Notion API Version. Defaults to None.
+            noconfirm (bool, optional): If you need not to confirm, set '--noconfirm=True' option. Defaults to False.
+        """
         if label is None:
             label = input("input config label name: ")
         if token is None:
@@ -80,6 +89,11 @@ class ConfigureClass:
         print("==> Done.")
 
     def show(self, label="current"):
+        """ Show your integration information.
+
+        Args:
+            label (str, optional): Label name for your integration information. Defaults to "current".
+        """
         PATH = os.environ['HOME'] + "/.notion_cli/config.toml"
         config = toml.load(open(PATH))
         if label in config:
