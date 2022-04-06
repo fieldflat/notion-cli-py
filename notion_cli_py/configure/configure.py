@@ -18,7 +18,6 @@ ___  | / /_______  /___(_)______________  ____/__  /____  _/
 __   |/ /_  __ \  __/_  /_  __ \_  __ \  /    __  /  __  /  
 _  /|  / / /_/ / /_ _  / / /_/ /  / / / /___  _  /____/ /   
 /_/ |_/  \____/\__/ /_/  \____//_/ /_/\____/  /_____/___/   
-                                                            
                 """
             )
             yn = input("Are you sure to create config file in {DIR}? [y/N]: ".format(DIR=DIR))
@@ -98,17 +97,44 @@ _  /|  / / /_/ / /_ _  / / /_/ /  / / / /___  _  /____/ /
         toml.dump(self.config, open(PATH, mode='w'))
         print("==> Done.")
 
-    def show(self, label="current"):
+    def show(self, label=""):
         """ Show your integration information.
 
         Args:
             label (str, optional): Label name for your integration information. Defaults to "current".
         """
         PATH = os.environ['HOME'] + "/.notion_cli/config.toml"
-        config = toml.load(open(PATH))
-        if label in config:
-            print(tabulate([(k, v if k != "token" else "*"*len(v[:-5]) + v[-5:]) for k, v in config[label].items()], headers=["key", "value"], tablefmt='fancy_grid'))
-            print("is current label:", True if config["current"]["label"] == config[label]["label"] else False)
+
+        if label == "":
+            for key in self.config:
+                if key =="current":
+                    continue
+                prefix = "  * " if self.config["current"]["label"] == self.config[key]["label"] else "    "
+                print(prefix + key)
+            sys.exit(0)
+
+        if label in self.config:
+            print(tabulate([(k, v if k != "token" else "*"*len(v[:-5]) + v[-5:]) for k, v in self.config[label].items()], headers=["key", "value"], tablefmt='fancy_grid'))
+            print("is current label:", True if self.config["current"]["label"] == self.config[label]["label"] else False)
+        else:
+            print("Label: '{label}' does not exist in {path}".format(label=label, path=PATH))
+            sys.exit(1)
+
+    def switch(self, label, noconfirm=False):
+        """ Switch integration setting.
+
+        Args:
+            label (_type_): Label name for your integration information.
+            noconfirm (bool, optional): If you need not to confirm, set '--noconfirm=True' option. Defaults to False.
+        """
+        PATH = os.environ['HOME'] + "/.notion_cli/config.toml"
+
+        if label in self.config:
+            contents = [(k, v if k != "token" else "*"*len(v[:-5]) + v[-5:]) for k, v in self.config[label].items()]
+            if confirm.confirm(contents, noconfirm=noconfirm):
+                self.config["current"] = self.config[label]
+                toml.dump(self.config, open(PATH, mode='w'))
+                print("==> switched.")
         else:
             print("Label: '{label}' does not exist in {path}".format(label=label, path=PATH))
             sys.exit(1)

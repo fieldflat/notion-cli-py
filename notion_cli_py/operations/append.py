@@ -21,9 +21,11 @@ class AppendClass:
         """
         c = client.Client(label)
         ### load template
+        payload = ""
         if read_path is None:
-            read_path = read_file.read_template_file(template_name)
-        payload = json.load(open(read_path, 'r'))
+            payload = read_file.read_template_file(template_name)
+        else:
+            payload = json.load(open(read_path, 'r'))
 
         ret = []
         for block_id in block_ids.split():

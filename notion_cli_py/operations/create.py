@@ -27,13 +27,15 @@ class CreateClass:
         c = client.Client(label)
 
         ### load template
+        payload = ""
         if read_path is None:
-            read_path = read_file.read_template_file(template_name)
-        payload = json.load(open(read_path, 'r'))
+            payload = read_file.read_template_file(template_name)
+        else:
+            payload = json.load(open(read_path, 'r'))
 
         ret = []
         for page_id in page_ids.split():
-            contents = [("page_id", page_id), ("template path", read_path)]
+            contents = [("page_id", page_id), ("template path", template_name if read_path is None else read_path)]
             if confirm.confirm(contents, noconfirm=noconfirm):
                 payload["parent"] = {
                     "page_id": page_id,
@@ -64,9 +66,11 @@ class CreateClass:
         c = client.Client(label)
 
         ### load template
+        payload = ""
         if read_path is None:
-            read_path = read_file.read_template_file(template_name)
-        payload = json.load(open(read_path, 'r'))
+            payload = read_file.read_template_file(template_name)
+        else:
+            payload = json.load(open(read_path, 'r'))
 
         ret = []
         for page_id in page_ids.split():

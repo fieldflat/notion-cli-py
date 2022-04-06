@@ -1,8 +1,10 @@
 import os
+import requests
+import json
 
 def read_template_file(template_name: str):
-    read_path = "../../files/" + template_name + ".json"
-    base = os.path.dirname(os.path.abspath(__file__))
-    read_path = os.path.normpath(os.path.join(base, read_path))
+    url = "https://raw.githubusercontent.com/fieldflat/notion-cli-py/main/files/" + template_name + ".json"
+    response = requests.get(url)
+    jsonData = response.json()
 
-    return read_path
+    return jsonData
