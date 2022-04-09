@@ -1,4 +1,5 @@
 import json
+import sys
 from ..client import client
 from ..utils import read_file, confirm
 
@@ -20,17 +21,12 @@ class AppendClass:
             json: Results of appending block children.
         """
         c = client.Client(label)
-        ### load template
-        payload = ""
-        if read_path is None:
-            payload = read_file.read_template_file(template_name)
-        else:
-            payload = json.load(open(read_path, 'r'))
 
         ret = []
         for block_id in block_ids.split():
-            contents = [("block_id", block_id), ("template path", read_path)]
+            contents = [("block_id", block_id), ("template path", read_path if read_path else template_name)]
             if confirm.confirm(contents, noconfirm=noconfirm):
+                payload = json.load(open(read_path, 'r')) if read_path else read_file.read_template_file(template_name)
                 ret.append(json.loads(c.append_block_children(block_id, payload)))
 
         return json.dumps(ret) if len(ret) != 0 else sys.exit(0)

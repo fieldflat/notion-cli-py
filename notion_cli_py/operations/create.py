@@ -10,12 +10,11 @@ class CreateClass:
     def __init__(self):
         """ CreateClass __init__ """
 
-    def pages(self, page_ids="", database_ids="", template_name="simple_page", read_path=None, noconfirm=False, label="current"):
+    def pages(self, page_ids, template_name="simple_page", read_path=None, noconfirm=False, label="current"):
         """ Create pages to existing parent page.
 
         Args:
-            page_ids (str, optional): Parent page ids (e.g. '--page-ids="xxxxxxxxxx yyyyyyyyyy"'). Defaults to "".
-            database_ids (str, optional): Parent database ids (e.g. '--database-ids="xxxxxxxxxx yyyyyyyyyy"'). Defaults to "".
+            page_ids (str, optional): Parent page ids (e.g. '--page-ids="xxxxxxxxxx yyyyyyyyyy"').
             template_name (str, optional): Template name for page object. Defaults to "simple_page".
             read_path (_type_, optional): Read path for input template file. Defaults to None.
             noconfirm (bool, optional): If you need not to confirm, set '--noconfirm=True' option. Defaults to False.
@@ -26,24 +25,37 @@ class CreateClass:
         """
         c = client.Client(label)
 
-        ### load template
-        payload = ""
-        if read_path is None:
-            payload = read_file.read_template_file(template_name)
-        else:
-            payload = json.load(open(read_path, 'r'))
-
         ret = []
         for page_id in page_ids.split():
-            contents = [("page_id", page_id), ("template path", template_name if read_path is None else read_path)]
+            contents = [("page_id", page_id), ("template path", read_path if read_path else template_name)]
             if confirm.confirm(contents, noconfirm=noconfirm):
+                payload = json.load(open(read_path, 'r')) if read_path else read_file.read_template_file(template_name)
                 payload["parent"] = {
                     "page_id": page_id,
                 }
                 ret.append(json.loads(c.create_page(payload)))
+        return json.dumps(ret) if len(ret) != 0 else sys.exit(0)
+
+    def pages_to_database(self, database_ids, template_name="simple_database", read_path=None, noconfirm=False, label="current"):
+        """ Create pages to existing parent database.
+
+        Args:
+            database_ids (_type_): Parent database ids (e.g. '--database-ids="xxxxxxxxxx yyyyyyyyyy"').
+            template_name (str, optional): Template name for page object. Defaults to "simple_database".
+            read_path (_type_, optional): Read path for input template file. Defaults to None.
+            noconfirm (bool, optional): If you need not to confirm, set '--noconfirm=True' option. Defaults to False.
+            label (str, optional): Name to identify your integration. Defaults to "current".
+
+        Returns:
+            _type_: _description_
+        """
+        c = client.Client(label)
+
+        ret = []
         for database_id in database_ids.split():
-            contents = [("database_id", database_id), ("template path", read_path)]
+            contents = [("database_id", database_id), ("template path", read_path if read_path else template_name)]
             if confirm.confirm(contents, noconfirm=noconfirm):
+                payload = json.load(open(read_path, 'r')) if read_path else read_file.read_template_file(template_name)
                 payload["parent"] = {
                     "database_id": database_id,
                 }
@@ -65,17 +77,11 @@ class CreateClass:
         """
         c = client.Client(label)
 
-        ### load template
-        payload = ""
-        if read_path is None:
-            payload = read_file.read_template_file(template_name)
-        else:
-            payload = json.load(open(read_path, 'r'))
-
         ret = []
         for page_id in page_ids.split():
             contents = [("page_id", page_id), ("template name", read_path)]
             if confirm.confirm(contents, noconfirm=noconfirm):
+                payload = json.load(open(read_path, 'r')) if read_path else read_file.read_template_file(template_name)
                 payload["parent"] = {
                     "type": "page_id",
                     "page_id": page_id,
