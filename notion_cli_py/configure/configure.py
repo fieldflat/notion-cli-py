@@ -5,6 +5,7 @@ import sys
 from tabulate import tabulate
 from ..utils import confirm
 
+
 class ConfigureClass:
     def __init__(self):
         """ Configure __init__ """
@@ -20,7 +21,8 @@ _  /|  / / /_/ / /_ _  / / /_/ /  / / / /___  _  /____/ /
 /_/ |_/  \____/\__/ /_/  \____//_/ /_/\____/  /_____/___/   
                 """
             )
-            yn = input("Are you sure to create config file in {DIR}? [y/N]: ".format(DIR=DIR))
+            yn = input(
+                "Are you sure to create config file in {DIR}? [y/N]: ".format(DIR=DIR))
             if yn != "y":
                 print("==> Aborted.")
                 sys.exit(0)
@@ -34,7 +36,8 @@ _  /|  / / /_/ / /_ _  / / /_/ /  / / / /___  _  /____/ /
                     with open(PATH, "x") as f:
                         print("==> Done.")
                 except FileExistsError:
-                    print("'{PATH}' already exists.".format(PATH=PATH), file=sys.stderr)
+                    print("'{PATH}' already exists.".format(
+                        PATH=PATH), file=sys.stderr)
                     sys.exit(1)
         config = toml.load(open(PATH))
         self.config = config
@@ -54,7 +57,8 @@ _  /|  / / /_/ / /_ _  / / /_/ /  / / / /___  _  /____/ /
         if token is None:
             token = getpass('input token for {token}: '.format(token=token))
         if notion_api_version is None:
-            notion_api_version = input("input notion api version [2022-02-22]: ")
+            notion_api_version = input(
+                "input notion api version [2022-02-22]: ")
 
         conf = {
             "label": label,
@@ -63,14 +67,16 @@ _  /|  / / /_/ / /_ _  / / /_/ /  / / / /___  _  /____/ /
         }
 
         # confirm settings
-        contents = [(k, v if k != "token" else "*"*len(v[:-5]) + v[-5:]) for k, v in conf.items()]
+        contents = [(k, v if k != "token" else "*"*len(v[:-5]) + v[-5:])
+                    for k, v in conf.items()]
         if not confirm.confirm(contents, noconfirm=noconfirm):
             sys.exit(0)
 
         # confirm override
         if label in self.config:
             while True and (not noconfirm):
-                choice = input("Label ('{label}') is already registered. Do you really override? [y/N]: ".format(label=label)).lower()
+                choice = input(
+                    "Label ('{label}') is already registered. Do you really override? [y/N]: ".format(label=label)).lower()
                 if choice in ['y', 'ye', 'yes']:
                     break
                 elif choice in ['n', 'no']:
@@ -86,7 +92,8 @@ _  /|  / / /_/ / /_ _  / / /_/ /  / / / /___  _  /____/ /
         # confirm override
         if label in self.config:
             while True and (not noconfirm):
-                choice = input("Do you want to set label ('{label}') to current label? [y/N]: ".format(label=label)).lower()
+                choice = input(
+                    "Do you want to set label ('{label}') to current label? [y/N]: ".format(label=label)).lower()
                 if choice in ['y', 'ye', 'yes']:
                     break
                 elif choice in ['n', 'no']:
@@ -107,17 +114,20 @@ _  /|  / / /_/ / /_ _  / / /_/ /  / / / /___  _  /____/ /
 
         if label == "":
             for key in self.config:
-                if key =="current":
+                if key == "current":
                     continue
                 prefix = "  * " if self.config["current"]["label"] == self.config[key]["label"] else "    "
                 print(prefix + key)
             sys.exit(0)
 
         if label in self.config:
-            print(tabulate([(k, v if k != "token" else "*"*len(v[:-5]) + v[-5:]) for k, v in self.config[label].items()], headers=["key", "value"], tablefmt='fancy_grid'))
-            print("is current label:", True if self.config["current"]["label"] == self.config[label]["label"] else False)
+            print(tabulate([(k, v if k != "token" else "*"*len(v[:-5]) + v[-5:])
+                  for k, v in self.config[label].items()], headers=["key", "value"], tablefmt='fancy_grid'))
+            print("is current label:",
+                  True if self.config["current"]["label"] == self.config[label]["label"] else False)
         else:
-            print("Label: '{label}' does not exist in {path}".format(label=label, path=PATH))
+            print("Label: '{label}' does not exist in {path}".format(
+                label=label, path=PATH))
             sys.exit(1)
 
     def switch(self, label, noconfirm=False):
@@ -130,11 +140,13 @@ _  /|  / / /_/ / /_ _  / / /_/ /  / / / /___  _  /____/ /
         PATH = os.environ['HOME'] + "/.notion_cli/config.toml"
 
         if label in self.config:
-            contents = [(k, v if k != "token" else "*"*len(v[:-5]) + v[-5:]) for k, v in self.config[label].items()]
+            contents = [(k, v if k != "token" else "*"*len(v[:-5]) + v[-5:])
+                        for k, v in self.config[label].items()]
             if confirm.confirm(contents, noconfirm=noconfirm):
                 self.config["current"] = self.config[label]
                 toml.dump(self.config, open(PATH, mode='w'))
                 print("==> switched.")
         else:
-            print("Label: '{label}' does not exist in {path}".format(label=label, path=PATH))
+            print("Label: '{label}' does not exist in {path}".format(
+                label=label, path=PATH))
             sys.exit(1)

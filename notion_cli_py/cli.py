@@ -2,6 +2,7 @@ import fire
 from .configure import configure
 from .operations import create, get, update, search, append, delete, query
 
+
 class Command(object):
     def get(self):
         """ Getting (Retrieving) operations.
@@ -66,6 +67,7 @@ class Command(object):
             _type_: Result of query operations.
         """
         return query.QueryClass()
+
 
 def main():
     fire.Fire(Command)

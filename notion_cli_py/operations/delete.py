@@ -2,6 +2,7 @@ import json
 from ..client import client
 from ..utils import confirm
 
+
 class DeleteClass:
     def __init__(self):
         """ DeleteClass __init__ """

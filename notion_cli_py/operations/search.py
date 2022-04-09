@@ -1,6 +1,7 @@
 import json
 from ..client import client
 
+
 class SearchClass:
     def __init__(self):
         """ SearchClass __init__ """

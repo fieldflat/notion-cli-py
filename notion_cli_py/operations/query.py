@@ -1,6 +1,7 @@
 import json
 from ..client import client
 
+
 class QueryClass:
     def __init__(self):
         """ QueryClass __init__ """
@@ -21,7 +22,7 @@ class QueryClass:
         """
         c = client.Client(label)
 
-        ### load template
+        # load template
         payload = json.load(open(read_path, 'r'))
 
         ret = []

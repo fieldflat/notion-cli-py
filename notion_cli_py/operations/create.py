@@ -6,6 +6,7 @@ import re
 from ..utils import read_file, confirm
 from tabulate import tabulate
 
+
 class CreateClass:
     def __init__(self):
         """ CreateClass __init__ """
@@ -27,9 +28,11 @@ class CreateClass:
 
         ret = []
         for page_id in page_ids.split():
-            contents = [("page_id", page_id), ("template path", read_path if read_path else template_name)]
+            contents = [("page_id", page_id), ("template path",
+                                               read_path if read_path else template_name)]
             if confirm.confirm(contents, noconfirm=noconfirm):
-                payload = json.load(open(read_path, 'r')) if read_path else read_file.read_template_file(template_name)
+                payload = json.load(open(
+                    read_path, 'r')) if read_path else read_file.read_template_file(template_name)
                 payload["parent"] = {
                     "page_id": page_id,
                 }
@@ -53,9 +56,11 @@ class CreateClass:
 
         ret = []
         for database_id in database_ids.split():
-            contents = [("database_id", database_id), ("template path", read_path if read_path else template_name)]
+            contents = [("database_id", database_id), ("template path",
+                                                       read_path if read_path else template_name)]
             if confirm.confirm(contents, noconfirm=noconfirm):
-                payload = json.load(open(read_path, 'r')) if read_path else read_file.read_template_file(template_name)
+                payload = json.load(open(
+                    read_path, 'r')) if read_path else read_file.read_template_file(template_name)
                 payload["parent"] = {
                     "database_id": database_id,
                 }
@@ -81,7 +86,8 @@ class CreateClass:
         for page_id in page_ids.split():
             contents = [("page_id", page_id), ("template name", read_path)]
             if confirm.confirm(contents, noconfirm=noconfirm):
-                payload = json.load(open(read_path, 'r')) if read_path else read_file.read_template_file(template_name)
+                payload = json.load(open(
+                    read_path, 'r')) if read_path else read_file.read_template_file(template_name)
                 payload["parent"] = {
                     "type": "page_id",
                     "page_id": page_id,

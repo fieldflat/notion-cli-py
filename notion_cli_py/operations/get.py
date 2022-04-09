@@ -2,6 +2,7 @@ import json
 from ..client import client
 from ..utils import confirm
 
+
 class GetClass:
     def __init__(self):
         """ GetClass __init__ """
@@ -41,7 +42,8 @@ class GetClass:
         c = client.Client(label)
         ret = []
         for page_id in page_ids.split():
-            ret.append(json.loads(c.get_page_property(page_id, property_id, page_size, start_cursor)))
+            ret.append(json.loads(c.get_page_property(
+                page_id, property_id, page_size, start_cursor)))
 
         return json.dumps(ret, indent=indent)
 
@@ -97,7 +99,8 @@ class GetClass:
         c = client.Client(label)
         ret = []
         for block_id in block_ids.split():
-            ret.append(json.loads(c.get_block_children(block_id, page_size, start_cursor)))
+            ret.append(json.loads(c.get_block_children(
+                block_id, page_size, start_cursor)))
 
         return json.dumps(ret, indent=indent)
 

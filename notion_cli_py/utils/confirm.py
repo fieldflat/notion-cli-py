@@ -1,5 +1,6 @@
 from tabulate import tabulate
 
+
 def confirm(contents, headers=["key", "value"], tablefmt='fancy_grid', noconfirm=False):
     while True and (not noconfirm):
         print(tabulate(contents, headers=headers, tablefmt=tablefmt))

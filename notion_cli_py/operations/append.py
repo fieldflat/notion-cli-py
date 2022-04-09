@@ -3,6 +3,7 @@ import sys
 from ..client import client
 from ..utils import read_file, confirm
 
+
 class AppendClass:
     def __init__(self):
         """ AppendClass __init__ """
@@ -24,9 +25,12 @@ class AppendClass:
 
         ret = []
         for block_id in block_ids.split():
-            contents = [("block_id", block_id), ("template path", read_path if read_path else template_name)]
+            contents = [("block_id", block_id), ("template path",
+                                                 read_path if read_path else template_name)]
             if confirm.confirm(contents, noconfirm=noconfirm):
-                payload = json.load(open(read_path, 'r')) if read_path else read_file.read_template_file(template_name)
-                ret.append(json.loads(c.append_block_children(block_id, payload)))
+                payload = json.load(open(
+                    read_path, 'r')) if read_path else read_file.read_template_file(template_name)
+                ret.append(json.loads(
+                    c.append_block_children(block_id, payload)))
 
         return json.dumps(ret) if len(ret) != 0 else sys.exit(0)
