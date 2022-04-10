@@ -3,11 +3,11 @@ import requests
 import json
 
 
-def read_template_file(template_name: str):
+def read_template_file(template_name: str, logger):
     try:
         url = "https://raw.githubusercontent.com/fieldflat/notion-cli-py/main/files/" + \
             template_name + ".json"
-        print("===> fetching {url}".format(url=url))
+        logger.debug("===> fetching {url} ...".format(url=url))
         response = requests.get(url)
         jsonData = response.json()
         return jsonData
