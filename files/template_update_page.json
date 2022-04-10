@@ -1,11 +1,10 @@
 {
-    "archived": true,
     "properties": {
         "title": {
             "title": [
                 {
                     "text": {
-                        "content": "Test Title updated3"
+                        "content": "Simple Page (updated by NotionCLI)"
                     }
                 }
             ]

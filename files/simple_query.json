@@ -4,7 +4,7 @@
             {
                 "property": "Name",
                 "title": {
-                    "equals": "AAA"
+                    "equals": "NotionCLI"
                 }
             }
         ]
