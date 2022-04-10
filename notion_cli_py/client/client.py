@@ -1,13 +1,23 @@
 import toml
 import os
 import requests
+import sys
+from ..utils import logger
 
 
 class Client:
     def __init__(self, label):
-        PATH = os.environ['HOME'] + "/.notion_cli/config.toml"
-        config = toml.load(open(PATH))
-        self.config = config[label]
+        self.logger, self.handler = logger.init_logger()
+        try:
+            PATH = os.environ['HOME'] + "/.notion_cli/config.toml"
+            config = toml.load(open(PATH))
+            self.config = config[label]
+        except FileNotFoundError:
+            print("[ERR] Not Found config file ({PATH}).".format(PATH=PATH), file=sys.stderr)
+            print("      You need to create config file before utilizing notion-cli operations.", file=sys.stderr)
+            print("      Please execute following command.", file=sys.stderr)
+            print("        *  notion-cli configure set", file=sys.stderr)
+            sys.exit(1)
 
     def get_headers(self):
         headers = {
