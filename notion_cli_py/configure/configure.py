@@ -4,6 +4,7 @@ import os
 import sys
 from tabulate import tabulate
 from ..utils import confirm, logger
+from notion_cli_py import __version__
 
 
 class ConfigureClass:
@@ -22,6 +23,7 @@ _  /|  / / /_/ / /_ _  / / /_/ /  / / / /___  _  /____/ /
 /_/ |_/  \____/\__/ /_/  \____//_/ /_/\____/  /_____/___/   
                 """
             )
+            self.logger.info("Version {version}".format(version=__version__))
             yn = input(
                 "Are you sure to create config file in {DIR}? [y/N]: ".format(DIR=DIR))
             if yn != "y":

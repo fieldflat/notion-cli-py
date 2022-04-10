@@ -18,6 +18,11 @@ class Client:
             print("      Please execute following command.", file=sys.stderr)
             print("        *  notion-cli configure set", file=sys.stderr)
             sys.exit(1)
+        except KeyError:
+            print("[ERR] Not found label ({label}).".format(label=label), file=sys.stderr)
+            print("      To create label, please execute following command.", file=sys.stderr)
+            print("        * notion-cli configure set", file=sys.stderr)
+            sys.exit(1)
 
     def get_headers(self):
         headers = {
