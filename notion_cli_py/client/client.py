@@ -7,7 +7,7 @@ from ..utils import logger
 
 class Client:
     def __init__(self, label):
-        self.logger, self.handler = logger.init_logger()
+        self.logger = logger.init_logger()
         try:
             PATH = os.environ['HOME'] + "/.notion_cli/config.toml"
             config = toml.load(open(PATH))

@@ -9,7 +9,7 @@ from logging import getLogger, DEBUG, StreamHandler, INFO
 class UpdateClass:
     def __init__(self):
         """ UpdateClass __init__ """
-        self.logger, self.handler = logger.init_logger()
+        self.logger = logger.init_logger()
 
     def pages(self, page_ids, template_name="simple_update_page", read_path=None, noconfirm=False, label="current", debug=False):
         """ Updating page objects.
@@ -27,7 +27,6 @@ class UpdateClass:
         """
         c = client.Client(label)
         if debug:
-            self.handler.setLevel(DEBUG)
             self.logger.setLevel(DEBUG)
 
         ret = []
@@ -65,7 +64,6 @@ class UpdateClass:
         """
         c = client.Client(label)
         if debug:
-            self.handler.setLevel(DEBUG)
             self.logger.setLevel(DEBUG)
 
         ret = []
@@ -104,7 +102,6 @@ class UpdateClass:
         """
         c = client.Client(label)
         if debug:
-            self.handler.setLevel(DEBUG)
             self.logger.setLevel(DEBUG)
 
         ret = []

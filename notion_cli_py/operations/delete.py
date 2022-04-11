@@ -7,7 +7,7 @@ from logging import getLogger, DEBUG, StreamHandler, INFO
 class DeleteClass:
     def __init__(self):
         """ DeleteClass __init__ """
-        self.logger, self.handler = logger.init_logger()
+        self.logger = logger.init_logger()
 
     def blocks(self, block_ids, noconfirm=False, label="current", debug=False):
         """ Delete block objects.
@@ -23,7 +23,6 @@ class DeleteClass:
         """
         c = client.Client(label)
         if debug:
-            self.handler.setLevel(DEBUG)
             self.logger.setLevel(DEBUG)
 
         ret = []

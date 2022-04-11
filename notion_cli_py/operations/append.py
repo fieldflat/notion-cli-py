@@ -8,7 +8,7 @@ from logging import getLogger, DEBUG, StreamHandler, INFO
 class AppendClass:
     def __init__(self):
         """ AppendClass __init__ """
-        self.logger, self.handler = logger.init_logger()
+        self.logger = logger.init_logger()
 
     def block_children(self, block_ids, template_name="simple_block", read_path=None, noconfirm=False, label="current", debug=False):
         """ Append block children to existing parent block.
@@ -26,7 +26,6 @@ class AppendClass:
         """
         c = client.Client(label)
         if debug:
-            self.handler.setLevel(DEBUG)
             self.logger.setLevel(DEBUG)
 
         ret = []

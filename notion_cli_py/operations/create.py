@@ -12,7 +12,7 @@ from logging import getLogger, DEBUG, StreamHandler, INFO
 class CreateClass:
     def __init__(self):
         """ CreateClass __init__ """
-        self.logger, self.handler = logger.init_logger()
+        self.logger = logger.init_logger()
 
     def pages(self, page_ids, template_name="simple_page", read_path=None, noconfirm=False, label="current", debug=False):
         """ Create pages to existing parent page.
@@ -30,7 +30,6 @@ class CreateClass:
         """
         c = client.Client(label)
         if debug:
-            self.handler.setLevel(DEBUG)
             self.logger.setLevel(DEBUG)
 
         ret = []
@@ -70,7 +69,6 @@ class CreateClass:
         """
         c = client.Client(label)
         if debug:
-            self.handler.setLevel(DEBUG)
             self.logger.setLevel(DEBUG)
 
         ret = []
@@ -111,14 +109,14 @@ class CreateClass:
         """
         c = client.Client(label)
         if debug:
-            self.handler.setLevel(DEBUG)
             self.logger.setLevel(DEBUG)
 
         ret = []
         payload = json.load(open(
             read_path, 'r')) if read_path else read_file.read_template_file(template_name, self.logger)
         for page_id in page_ids.split():
-            contents = [("page_id", page_id), ("template name", read_path)]
+            contents = [("page_id", page_id), ("template name",
+                                               read_path if read_path else template_name)]
             if confirm.confirm(contents, noconfirm=noconfirm):
                 payload["parent"] = {
                     "type": "page_id",

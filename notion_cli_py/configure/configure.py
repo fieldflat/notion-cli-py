@@ -12,7 +12,7 @@ class ConfigureClass:
         """ Configure __init__ """
         DIR = os.environ['HOME'] + "/.notion_cli"
         PATH = os.environ['HOME'] + "/.notion_cli/config.toml"
-        self.logger, self.handler = logger.init_logger()
+        self.logger = logger.init_logger()
         if not os.path.exists(DIR) or not os.path.exists(PATH):
             self.logger.info(
                 """
