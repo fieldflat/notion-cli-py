@@ -13,15 +13,15 @@ class Client:
             config = toml.load(open(PATH))
             self.config = config[label]
         except FileNotFoundError:
-            print("[ERR] Not Found config file ({PATH}).".format(PATH=PATH), file=sys.stderr)
-            print("      You need to create config file before utilizing notion-cli operations.", file=sys.stderr)
-            print("      Please execute following command.", file=sys.stderr)
-            print("        *  notion-cli configure set", file=sys.stderr)
+            self.logger.error("[ERR] Not Found config file ({PATH}).".format(PATH=PATH))
+            self.logger.error("      You need to create config file before utilizing notion-cli operations.")
+            self.logger.error("      Please execute following command.")
+            self.logger.error("        *  notion-cli configure set")
             sys.exit(1)
         except KeyError:
-            print("[ERR] Not found label ({label}).".format(label=label), file=sys.stderr)
-            print("      To create label, please execute following command.", file=sys.stderr)
-            print("        * notion-cli configure set", file=sys.stderr)
+            self.logger.error("[ERR] Not found label ({label}).".format(label=label))
+            self.logger.error("      To create label, please execute following command.")
+            self.logger.error("        * notion-cli configure set")
             sys.exit(1)
 
     def get_headers(self):
