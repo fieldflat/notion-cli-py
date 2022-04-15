@@ -14,8 +14,8 @@ First, You need to create config file.
 
 ## License
 
-Licensed under the Hoge License.
+Licensed under the MIT License.
 
 ## Disclaimer
 
-This is NOT an official Notion product.
+This is **NOT** an official Notion product.
