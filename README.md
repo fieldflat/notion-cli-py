@@ -1,26 +1,21 @@
-=====================
-NotionCLI
-=====================
+## NotionCLI
 
 NotionCLI - The CLI tool for Notion.co (https://www.notion.so/ja-jp/product).
 
-Installation
-=====================
+## Installation
 
 * To install NotionCLI with pip, run: `pip install hogehoge`
 
-How to use
-=====================
+## How to use
 
-Setup
---------
+### Setup
 
 First, You need to create config file.
 
-License
-=====================
+## License
+
 Licensed under the Hoge License.
 
-Disclaimer
-=====================
+## Disclaimer
+
 This is NOT an official Notion product.
