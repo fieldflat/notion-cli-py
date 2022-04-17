@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "notion-cli-py"
-version = "0.1.1"
+version = "1.0.0"
 description = "NotionCLI - The CLI tool for Notion.co (https://www.notion.so/ja-jp/product)."
 authors = ["Tomonori HIRATA <tomonori4565@icloud.com>"]
 license = "MIT"
