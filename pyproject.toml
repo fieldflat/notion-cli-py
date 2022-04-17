@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "notion-cli-py"
-version = "0.1.0"
+version = "0.1.1"
 description = "NotionCLI - The CLI tool for Notion.co (https://www.notion.so/ja-jp/product)."
 authors = ["Tomonori HIRATA <tomonori4565@icloud.com>"]
 license = "MIT"
@@ -11,6 +11,8 @@ repository = "https://github.com/fieldflat/notion-cli-py"
 [tool.poetry.dependencies]
 python = "^3.9"
 fire = "^0.4.0"
+tabulate = "^0.8.9"
+requests = "^2.27.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
