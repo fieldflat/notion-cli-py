@@ -129,7 +129,7 @@ _  /|  / / /_/ / /_ _  / / /_/ /  / / / /___  _  /____/ /
             self.logger.info(tabulate([(k, v if k != "token" else "*"*len(v[:-5]) + v[-5:])
                   for k, v in self.config[label].items()], headers=["key", "value"], tablefmt='fancy_grid'))
             self.logger.info("is current label:",
-                  True if self.config["current"]["label"] == self.config[label]["label"] else False)
+                  "True" if self.config["current"]["label"] == self.config[label]["label"] else "False")
         else:
             self.logger.error("Label: '{label}' does not exist in {path}".format(
                 label=label, path=PATH))
