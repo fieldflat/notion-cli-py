@@ -10,18 +10,22 @@ NotionCLI - The CLI tool for Notion.co (https://www.notion.so/ja-jp/product).
 
 ### Create Integration
 
-To use the notion api, you must create an integration. Please create it [here](https://www.notion.so/my-integrations).
+To use the notion api, you need to create an integration. Please create it [here](https://www.notion.so/my-integrations).
+
+![image-notion1](./image-notion1.png)
+
+![image-notion2](./image-notion2.png)
 
 ### Setup
 
-After installation, you need to create config file first.
+After installation, you are required to create config file first.
 Please run following command.
 
 ```
 $ notion-cli configure set
 ```
 
-Then you need to put your integration infomation about the following questions.
+Then you need to put your integration information about the following questions.
 
 ```
 Are you sure to create config file in /Users/hiratatomonori/.notion_cli? [y/N]: # Type 'y'.
@@ -30,7 +34,7 @@ input token for NotionCLI: # Type your integration token.
 Do you want to set label (LABEL NAME) to current label? [y/N]: # Type 'y' (if this is your first setting).
 ```
 
-Run following command and check that the configuration is completed properly.
+Please run following command and check that the configuration is completed properly.
 
 ```
 ### Check if the target page has the integration that set above.

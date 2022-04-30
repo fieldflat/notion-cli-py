@@ -1,9 +1,8 @@
-from getpass import getpass
 import toml
 import os
 import sys
 from tabulate import tabulate
-from ..utils import confirm, logger
+from ..utils import confirm, logger, input_handler
 from notion_cli_py import __version__
 
 
@@ -24,7 +23,7 @@ _  /|  / / /_/ / /_ _  / / /_/ /  / / / /___  _  /____/ /
                 """
             )
             self.logger.info("Version {version}".format(version=__version__))
-            yn = input(
+            yn = input_handler.input_handler(
                 "Are you sure to create config file in {DIR}? [y/N]: ".format(DIR=DIR))
             if yn != "y":
                 self.logger.error("==> Aborted.")
@@ -56,11 +55,11 @@ _  /|  / / /_/ / /_ _  / / /_/ /  / / / /___  _  /____/ /
             noconfirm (bool, optional): If you need not to confirm, set '--noconfirm=True' option. Defaults to False.
         """
         if label is None:
-            label = input("input config label name: ")
+            label = input_handler.input_handler("input config label name: ")
         if token is None:
-            token = getpass('input token for {label}: '.format(label=label))
+            token = input_handler.getpass_handler('input token for {label}: '.format(label=label))
         if notion_api_version is None:
-            notion_api_version = input(
+            notion_api_version = input_handler.input_handler(
                 "input notion api version [2022-02-22]: ")
             if notion_api_version == "" or notion_api_version == None:
                 notion_api_version = "2022-02-22"
@@ -80,7 +79,7 @@ _  /|  / / /_/ / /_ _  / / /_/ /  / / / /___  _  /____/ /
         # confirm override
         if label in self.config:
             while True and (not noconfirm):
-                choice = input(
+                choice = input_handler.input_handler(
                     "Label ('{label}') is already registered. Do you really override? [y/N]: ".format(label=label)).lower()
                 if choice in ['y', 'ye', 'yes']:
                     break
@@ -97,7 +96,7 @@ _  /|  / / /_/ / /_ _  / / /_/ /  / / / /___  _  /____/ /
         # confirm override
         if label in self.config:
             while True and (not noconfirm):
-                choice = input(
+                choice = input_handler.input_handler(
                     "Do you want to set label ('{label}') to current label? [y/N]: ".format(label=label)).lower()
                 if choice in ['y', 'ye', 'yes']:
                     break
@@ -128,8 +127,7 @@ _  /|  / / /_/ / /_ _  / / /_/ /  / / / /___  _  /____/ /
         if label in self.config:
             self.logger.info(tabulate([(k, v if k != "token" else "*"*len(v[:-5]) + v[-5:])
                   for k, v in self.config[label].items()], headers=["key", "value"], tablefmt='fancy_grid'))
-            self.logger.info("is current label:",
-                  True if self.config["current"]["label"] == self.config[label]["label"] else False)
+            self.logger.info("is current label: " + "True" if self.config["current"]["label"] == self.config[label]["label"] else "False")
         else:
             self.logger.error("Label: '{label}' does not exist in {path}".format(
                 label=label, path=PATH))
