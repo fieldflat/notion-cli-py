@@ -4,7 +4,7 @@ from getpass import getpass
 
 
 def input_handler(message):
-    lg = logger.init_logger()
+    lg = logger.init_logger(__name__)
     try:
         m = input(message)
         return m
@@ -13,7 +13,7 @@ def input_handler(message):
         sys.exit(1)
 
 def getpass_handler(message):
-    lg = logger.init_logger()
+    lg = logger.init_logger(__name__)
     try:
         m = getpass(message)
         return m

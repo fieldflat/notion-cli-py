@@ -8,7 +8,7 @@ from logging import getLogger, DEBUG, StreamHandler, INFO
 class AppendClass:
     def __init__(self):
         """ AppendClass __init__ """
-        self.logger = logger.init_logger()
+        self.logger = logger.init_logger(__name__)
 
     def block_children(self, block_ids, template_name="simple_block", read_path=None, noconfirm=False, label="current", debug=False):
         """ Append block children to existing parent block.

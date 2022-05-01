@@ -1,8 +1,8 @@
 from logging import getLogger, StreamHandler, INFO, DEBUG
 
 
-def init_logger():
-    logger = getLogger(__name__)
+def init_logger(name):
+    logger = getLogger(name)
     logger.setLevel(INFO)
     if not logger.hasHandlers():
         handler = StreamHandler()

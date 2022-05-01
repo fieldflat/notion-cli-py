@@ -9,7 +9,7 @@ from logging import getLogger, DEBUG, StreamHandler, INFO
 class UpdateClass:
     def __init__(self):
         """ UpdateClass __init__ """
-        self.logger = logger.init_logger()
+        self.logger = logger.init_logger(__name__)
 
     def pages(self, page_ids, template_name="simple_update_page", read_path=None, noconfirm=False, label="current", debug=False):
         """ Updating page objects.

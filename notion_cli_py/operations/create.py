@@ -12,7 +12,7 @@ from logging import getLogger, DEBUG, StreamHandler, INFO
 class CreateClass:
     def __init__(self):
         """ CreateClass __init__ """
-        self.logger = logger.init_logger()
+        self.logger = logger.init_logger(__name__)
 
     def pages(self, page_ids, template_name="simple_page", read_path=None, noconfirm=False, label="current", debug=False):
         """ Create pages to existing parent page.
